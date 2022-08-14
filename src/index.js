@@ -1,8 +1,14 @@
 import "./styles.css";
+import d3 from "d3";
 
 // variables
 const dataSource =
   "https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/GDP-data.json";
+
+// test data
+const dataset = [12, 31, 22, 17, 25, 18, 29, 14, 9];
+const w = 500;
+const h = 100;
 
 // DOM modifiers (vanilla JS)
 document.getElementById("app").innerHTML = `
@@ -18,18 +24,23 @@ document.getElementById("viz-1").innerHTML = `
 // Visualization
 // svg
 const svg = d3
-  .select("title")
+  .select("#title")
   .append("svg")
-  .attr("width", w)
-  .attr("height", h)
-  .attr("width", 25)
-  .attr("height", 100);
+ 
+
+const data = d3.json(dataSource, (res) => {
+  console.log("response here");
+});
 
 // rectangles
 svg
   .selectAll("rect")
-  .data(dataSource)
+  .data(dataset)
   .enter()
   .append("rect")
-  .attr("x", 0)
-  .attr("y", 0);
+  .attr("x", (d, i) => {
+    return i * 30;
+  })
+  .attr("y", 0)
+  .attr("width", 25)
+  .attr("height", 100);
